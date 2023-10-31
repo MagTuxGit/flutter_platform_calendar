@@ -12,6 +12,8 @@ public class PlatformCalendarPlugin: NSObject, FlutterPlugin {
     switch call.method {
     case "getPlatformVersion":
       result("iOS " + UIDevice.current.systemVersion)
+    case "getFirstDayOfWeek":
+      result(Calendar.current.firstWeekday - 1)
     default:
       result(FlutterMethodNotImplemented)
     }

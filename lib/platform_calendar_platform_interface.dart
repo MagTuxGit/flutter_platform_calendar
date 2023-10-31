@@ -26,4 +26,8 @@ abstract class PlatformCalendarPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<int?> getFirstDayOfWeek() {
+    throw UnimplementedError('getFirstDayOfWeek() has not been implemented.');
+  }
 }

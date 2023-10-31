@@ -10,6 +10,9 @@ class MockPlatformCalendarPlatform
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<int?> getFirstDayOfWeek() => Future.value(3);
 }
 
 void main() {
@@ -25,5 +28,13 @@ void main() {
     PlatformCalendarPlatform.instance = fakePlatform;
 
     expect(await platformCalendarPlugin.getPlatformVersion(), '42');
+  });
+
+  test('getFirstDayOfWeek', () async {
+    PlatformCalendar platformCalendarPlugin = PlatformCalendar();
+    MockPlatformCalendarPlatform fakePlatform = MockPlatformCalendarPlatform();
+    PlatformCalendarPlatform.instance = fakePlatform;
+
+    expect(await platformCalendarPlugin.getFirstDayOfWeek(), 3);
   });
 }

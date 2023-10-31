@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  int _platformFirstDay = 0;
   final _platformCalendarPlugin = PlatformCalendar();
 
   @override
@@ -28,11 +29,12 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
+    int firstDay = 0;
     try {
       platformVersion =
           await _platformCalendarPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      firstDay =
+          await _platformCalendarPlugin.getFirstDayOfWeek() ?? 0;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -44,6 +46,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _platformVersion = platformVersion;
+      _platformFirstDay = firstDay;
     });
   }
 
@@ -54,8 +57,21 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Builder(
+          builder: (context) {
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Running on: $_platformVersion\n'),
+                  const SizedBox(height: 32),
+                  Text('Platform first day of week: $_platformFirstDay\n'),
+                  const SizedBox(height: 32),
+                  Text('Locale first day of week: ${MaterialLocalizations.of(context).firstDayOfWeekIndex}\n'),
+                ],
+              ),
+            );
+          }
         ),
       ),
     );

@@ -11,7 +11,15 @@ class MethodChannelPlatformCalendar extends PlatformCalendarPlatform {
 
   @override
   Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    final version =
+        await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
+  }
+
+  @override
+  Future<int?> getFirstDayOfWeek() async {
+    final firstDayOfWeek =
+        await methodChannel.invokeMethod<int>('getFirstDayOfWeek');
+    return firstDayOfWeek;
   }
 }
